@@ -44,7 +44,7 @@ def chat():
 
     try:
         completion = client.chat.completions.create(
-            model="gpt-oss-120b",
+            model="openai/gpt-oss-120b",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
