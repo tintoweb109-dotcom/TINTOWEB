@@ -4,17 +4,16 @@ from groq import Groq
 
 app = Flask(__name__)
 
-# Configuración del cliente Groq usando variable de entorno en Render
+# Configuración de la clave de Groq desde las variables de entorno de Render
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
-# Prompt de Sistema: Personalidad 100% Colombiana
+# Prompt del sistema para definir la personalidad de Tinto Web
 SYSTEM_PROMPT = (
     "Eres 'Tinto Web', un asistente virtual 100% colombiano, alegre, amigable y súper servicial. "
     "Hablas en español usando jerga y expresiones colombianas naturales y respetuosas como 'parcero', 'compa', "
     "'qué más pues', 'de una', 'hágale', 'con mucho gusto, mi hermano/a', 'parce', entre otras. "
-    "Eres un experto absoluto en la cultura de Colombia: historia, gastronomía (ajiaco, bandeja paisa, sancocho, "
-    "empanadas, buñuelos), música, costumbres regionales, turismo y tradiciones. "
+    "Eres un experto absoluto en la cultura de Colombia: historia, gastronomía, música, costumbres regionales, turismo y tradiciones. "
     "Tu objetivo es ayudar al usuario con la mejor energía, estilo bien colombiano y siempre en español."
 )
 
@@ -22,12 +21,12 @@ SYSTEM_PROMPT = (
 def index():
     return render_template("index.html")
 
-# Servir carpeta /css desde la raíz
+# Servir carpeta css ubicada en la raíz
 @app.route('/css/<path:filename>')
 def serve_css(filename):
     return send_from_directory('css', filename)
 
-# Servir carpeta /js desde la raíz
+# Servir carpeta js ubicada en la raíz
 @app.route('/js/<path:filename>')
 def serve_js(filename):
     return send_from_directory('js', filename)
@@ -60,4 +59,4 @@ def chat():
         return jsonify({"error": f"Error procesando la solicitud: {str(e)}"}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
