@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tinto Web — ¡El Asistente Más Parcero!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="avatar">☕</div>
+            <div class="header-info">
+                <h1>Tinto Web</h1>
+                <p>¡El asistente más parcero de Colombia!</p>
+            </div>
+        </header>
 
+        <div class="chat-box" id="chat-box">
+            <div class="message bot-message">
+                ¡Quiubo, parcero! Bienvenid@ a <strong>Tinto Web</strong>. ¿Qué más pues, compa? ¿En qué le puedo colaborar hoy sobre nuestra cultura colombiana o lo que necesite? ¡De una!
+            </div>
+        </div>
+
+        <form class="chat-input-area" id="chat-form">
+            <input type="text" id="user-input" placeholder="Hable con el parce aquí..." autocomplete="off" required>
+            <button type="submit" id="send-btn">
+                <span>Enviar</span>
+            </button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
