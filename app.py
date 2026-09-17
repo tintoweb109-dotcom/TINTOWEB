@@ -2,10 +2,10 @@ import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from groq import Groq
 
-# Configuración de Flask para detectar carpetas estáticas en la raíz del proyecto
+# Configuración para servir archivos estáticos directamente desde las carpetas raíz (css, js, img)
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# Cliente oficial de Groq utilizando la variable de entorno
+# Se conecta usando la variable exacta que tienes en Render: GROQ_API_KEY
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 SYSTEM_PROMPT = """
@@ -20,7 +20,7 @@ Tus características son:
 def home():
     return render_template('index.html')
 
-# Rutas explícitas para servir CSS, JS e imágenes desde la raíz
+# Enrutamiento directo para carpetas en la raíz
 @app.route('/css/<path:path>')
 def send_css(path):
     return send_from_directory('css', path)
@@ -42,7 +42,7 @@ def chat():
         if not user_message:
             return jsonify({'response': '¡Uy compa! Escribe un mensaje para poder responderte. ☕'})
 
-        # Petición a la API de Groq usando Llama 3
+        # Modelo oficial de Groq (ultra rápido e inteligente)
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
@@ -57,7 +57,7 @@ def chat():
         return jsonify({'response': bot_response})
 
     except Exception as e:
-        print(f"Error en el servidor: {e}")
+        print(f"Error detallado en el servidor: {e}")
         return jsonify({'response': '¡Uy parcero! Tuve un problema temporal para conectar con la IA. ¡Intenta preguntarme otra vez! ☕'})
 
 if __name__ == '__main__':
