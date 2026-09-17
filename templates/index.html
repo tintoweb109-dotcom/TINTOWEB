@@ -3,110 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tinto Web — El Asistente IA Colombiano</title>
+    <title>Tinto Web — Asistente IA de Colombia</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Navegación -->
+    <!-- Navegación Principal -->
     <nav class="navbar">
         <div class="logo">
-            <img src="/img/mini-tinto.png" alt="Mini Tinto" class="logo-robot">
-            <span class="brand-name">Tinto Web</span>
+            <img src="/img/mini-tinto.png" alt="Mini Tinto Avatar" class="logo-robot">
+            <span class="brand-name">Tinto<span class="highlight">Web</span></span>
         </div>
         <ul class="nav-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#que-es">¿Qué es?</a></li>
-            <li><a href="#biodiversidad">Biodiversidad</a></li>
+            <li><a href="#biodiversidad">Cultura & Fauna</a></li>
             <li><a href="#creadores">Creadores</a></li>
         </ul>
-        <button class="btn-primary" onclick="scrollToChat()">Probar Chat</button>
+        <button class="btn-primary" onclick="scrollToChat()">Chatear con Mini Tinto ☕</button>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section / Encabezado -->
     <header class="hero" id="inicio">
         <div class="hero-content">
-            <span class="badge">Inteligencia Artificial 100% Colombiana 🇨🇴</span>
-            <h1>Descubre la riqueza de Colombia con Mini Tinto</h1>
-            <p>Un asistente virtual con el sabor, la calidez y el conocimiento sobre nuestra cultura, biodiversidad y tecnología.</p>
+            <span class="badge">✨ Inteligencia Artificial 100% Colombiana 🇨🇴</span>
+            <h1>Explora Colombia de la mano de <span class="gradient-text">Mini Tinto</span></h1>
+            <p>Un asistente virtual amigable que entiende nuestro lenguaje, cultura, biodiversidad y tradiciones regionales. ¡Con el verdadero sabor de nuestra tierra!</p>
             <div class="hero-buttons">
-                <button onclick="scrollToChat()" class="btn-hero-primary">Conoce a Tinto Web ☕</button>
-                <a href="#biodiversidad" class="btn-hero-secondary">Explorar Colombia</a>
+                <button onclick="scrollToChat()" class="btn-hero-primary">Hablar con Mini Tinto ☕</button>
+                <a href="#biodiversidad" class="btn-hero-secondary">Descubrir Colombia 🇨🇴</a>
             </div>
         </div>
     </header>
 
-    <!-- Sección ¿Qué es? -->
+    <!-- Sección ¿Qué es Tinto Web? -->
     <section class="section" id="que-es">
-        <h2 class="section-title">¿Qué es Tinto Web?</h2>
+        <div class="section-header">
+            <h2 class="section-title">¿Qué hace único a Tinto Web?</h2>
+            <p class="section-subtitle">Tecnología de vanguardia combinada con la calidez de nuestra gente.</p>
+        </div>
         <div class="cards-grid">
             <div class="card">
                 <div class="card-icon">🗣️</div>
-                <h3>Jerga Auténtica</h3>
-                <p>Habla en español colombiano natural, con expresiones tradicionales como <em>"parcero"</em>, <em>"compa"</em> y <em>"de una"</em>.</p>
+                <h3>Lenguaje Natural Colombiano</h3>
+                <p>Habla en un español cercano y autóctono, utilizando expresiones de nuestras regiones como <em>"parcero"</em>, <em>"compa"</em> y <em>"de una"</em>.</p>
             </div>
             <div class="card">
                 <div class="card-icon">🇨🇴</div>
                 <h3>Cultura & Tradición</h3>
-                <p>Aprende sobre gastronomía, leyendas, música y costumbres de las distintas regiones del país.</p>
+                <p>Conoce a fondo nuestra gastronomía, folclor, mitos, leyendas, música y sitios turísticos inolvidables.</p>
             </div>
             <div class="card">
                 <div class="card-icon">⚡</div>
-                <h3>Velocidad Groq</h3>
-                <p>Potenciado por modelos de lenguaje abiertos procesados en milisegundos.</p>
+                <h3>Respuestas Ultrarrápidas</h3>
+                <p>Potenciado por la API de Groq para entregar respuestas claras, precisas y en cuestión de milisegundos.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sección Biodiversidad Colombiana -->
+    <!-- Sección Riqueza Cultural y Biodiversidad -->
     <section class="section alt-bg" id="biodiversidad">
-        <h2 class="section-title">Nuestra Biodiversidad y Cultura</h2>
-        <p class="section-subtitle">Mini Tinto te ayuda a explorar la riqueza natural de Colombia</p>
+        <div class="section-header">
+            <h2 class="section-title">Biodiversidad y Riqueza Nacional</h2>
+            <p class="section-subtitle">Mini Tinto te ayuda a descubrir los tesoros naturales de Colombia</p>
+        </div>
         
         <div class="cards-grid">
             <div class="card bio-card">
                 <div class="card-icon">🦅</div>
                 <h3>Cóndor de los Andes</h3>
-                <p>El ave nacional que adorna las montañas y simboliza la libertad de nuestro territorio.</p>
+                <p>El rey de nuestros cielos andinos y símbolo supremo de la libertad presente en nuestro escudo patrio.</p>
             </div>
             <div class="card bio-card">
-                <div class="card-icon">🐾</div>
-                <h3>Chigüiro y Jaguar</h3>
-                <p>Símbolos únicos de la fauna de los Llanos y la selva amazónica colombiana.</p>
+                <div class="card-icon">🐆</div>
+                <h3>Fauna Emblemática</h3>
+                <p>Aprende sobre el majestuoso jaguar de la Amazonía, el amigable chigüiro de los Llanos y la gran diversidad de aves.</p>
             </div>
             <div class="card bio-card">
-                <div class="card-icon">🌸</div>
-                <h3>Orquídea y Palma de Cera</h3>
-                <p>Flores y árboles insignias reconocidos a nivel mundial por su majestuosidad.</p>
+                <div class="card-icon">🌴</div>
+                <h3>Flora & Naturaleza</h3>
+                <p>Desde la imponente Palma de Cera del Quindío hasta la Orquídea, flor nacional que engalana nuestros bosques.</p>
             </div>
         </div>
     </section>
 
     <!-- Sección Creadores -->
     <section class="section" id="creadores">
-        <h2 class="section-title">Equipo Creador</h2>
-        <p class="section-subtitle">Desarrollado con dedicación por talento estudiantil técnico.</p>
+        <div class="section-header">
+            <h2 class="section-title">Equipo Creador</h2>
+            <p class="section-subtitle">Proyecto impulsado por el talento de la formación técnica en sistemas.</p>
+        </div>
         <div class="creadores-grid">
             <div class="creator-card">
                 <div class="creator-avatar">👨‍💻</div>
                 <h3>Jeampier Gutiérrez Pita</h3>
-                <span class="creator-role">Desarrollador Principal & Sistemas</span>
-                <p>Estudiante de Técnico en Sistemas enfocado en IA, desarrollo de software y web.</p>
+                <span class="creator-role">Líder de Desarrollo & Técnico en Sistemas</span>
+                <p>Estudiante de 10.° grado enfocado en arquitectura web, integración de modelos de lenguaje e inteligencia artificial.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sección Chatbot con Mini Tinto -->
+    <!-- Módulo de Chatbot Interactivo -->
     <section class="section chat-section-container alt-bg" id="chat-section">
         <div class="chat-wrapper">
             <header class="chat-header">
-                <img src="/img/mini-tinto.png" alt="Mini Tinto Avatar" class="chat-avatar-img">
-                <div class="header-info">
-                    <h2>Chat con Tinto Web</h2>
-                    <p>Mini Tinto en línea — ¡Pregúntame lo que quieras, parcero!</p>
+                <div class="header-left">
+                    <img src="/img/mini-tinto.png" alt="Mini Tinto Avatar" class="chat-avatar-img">
+                    <div class="header-info">
+                        <h2>Chat con Tinto Web</h2>
+                        <span class="status-online"><span class="status-dot"></span> Mini Tinto en línea</span>
+                    </div>
                 </div>
             </header>
 
@@ -116,7 +125,7 @@
                         <img src="/img/mini-tinto.png" class="mini-icon" alt="Mini Tinto">
                         <strong>Mini Tinto:</strong>
                     </div>
-                    ¡Quiubo, parcero! Bienvenid@ a <strong>Tinto Web</strong>. ¿Qué más pues, compa? ¿En qué le puedo colaborar hoy sobre nuestra cultura colombiana, animales o lo que necesite? ¡De una!
+                    ¡Quiubo, parcero! Bienvenid@ a <strong>Tinto Web</strong>. ¿Qué más pues, compa? ¿En qué le puedo colaborar hoy sobre nuestra cultura, animales colombianos o lo que necesite? ¡Pregunte con confianza!
                 </div>
             </section>
 
@@ -124,23 +133,23 @@
                 <input 
                     type="text" 
                     id="user-input" 
-                    placeholder="Hable con Mini Tinto aquí..." 
+                    placeholder="Escribe tu mensaje para Mini Tinto..." 
                     autocomplete="off" 
                     required
                 >
-                <button type="submit" id="send-btn">Enviar</button>
+                <button type="submit" id="send-btn">Enviar 🚀</button>
             </form>
         </div>
     </section>
 
-    <!-- Mini Tinto Flotante Guía -->
+    <!-- Mini Tinto Flotante (Guía Interactivo) -->
     <div class="floating-guide" id="floating-guide" onclick="scrollToChat()">
         <img src="/img/mini-tinto.png" alt="Mini Tinto Guía" class="guide-img">
-        <div class="guide-bubble">¡Hola! Soy Mini Tinto. Haz clic aquí para chatear conmigo. ☕</div>
+        <div class="guide-bubble">¡Hola! Soy Mini Tinto. Tócame para chatear. ☕</div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Tinto Web — Proyecto Técnico en Sistemas.</p>
+        <p>&copy; 2026 Tinto Web — Proyecto Técnico en Sistemas | Diseñado con talento colombiano 🇨🇴</p>
     </footer>
 
     <script src="/js/app.js"></script>
