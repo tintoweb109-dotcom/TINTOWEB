@@ -47,13 +47,12 @@ def chat():
         if not user_message:
             return jsonify({'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'})
 
-        # Petición a la API usando el modelo Gemma 2 de Google (Activo, no Llama, ultra rápido)
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="gemma2-9b-it",
+            model="openai/gpt-oss-120b",
             temperature=0.6,
             max_tokens=500
         )
