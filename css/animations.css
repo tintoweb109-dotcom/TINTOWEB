@@ -1,1 +1,46 @@
+/* Animación de Respiración y Flotación 3D para Mini Tinto */
+.mini-tinto-alive {
+    animation: tintoFloat 3s ease-in-out infinite, tintoGlow 2.5s ease-in-out infinite alternate;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
+.mini-tinto-alive:hover {
+    transform: scale(1.15) rotate(8deg);
+    filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.8));
+}
+
+@keyframes tintoFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes tintoGlow {
+    0% { filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.3)); }
+    100% { filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.7)); }
+}
+
+/* Efecto al escribir o enviar mensaje */
+.tinto-talking {
+    animation: tintoTalk 0.4s ease-in-out infinite alternate !important;
+}
+
+@keyframes tintoTalk {
+    0% { transform: scale(1) translateY(0); }
+    100% { transform: scale(1.1) translateY(-5px) rotate(4deg); }
+}
+
+/* Luces Neón y Pulsos */
+.pulse-btn {
+    animation: btnPulse 2s infinite;
+}
+
+@keyframes btnPulse {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+    70% { box-shadow: 0 0 0 15px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+.glow-border:hover {
+    box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
+}
