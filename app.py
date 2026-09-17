@@ -2,10 +2,10 @@ import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from groq import Groq
 
-# Configuración para servir archivos estáticos directamente desde las carpetas raíz (css, js, img)
+# Configuración para servir archivos estáticos directamente desde las carpetas raíz
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# Se conecta usando la variable exacta que tienes en Render: GROQ_API_KEY
+# Cliente oficial de Groq
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 SYSTEM_PROMPT = """
@@ -20,7 +20,7 @@ Tus características son:
 def home():
     return render_template('index.html')
 
-# Enrutamiento directo para carpetas en la raíz
+# Enrutamiento de archivos estáticos
 @app.route('/css/<path:path>')
 def send_css(path):
     return send_from_directory('css', path)
@@ -42,13 +42,13 @@ def chat():
         if not user_message:
             return jsonify({'response': '¡Uy compa! Escribe un mensaje para poder responderte. ☕'})
 
-        # Modelo oficial de Groq (ultra rápido e inteligente)
+        # Modelo oficial activo en Groq (Ultra rápido y potente)
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="llama-3.1-8b-instant",
+            model="llama-3.3-70b-versatile",
             temperature=0.7,
             max_tokens=500
         )
