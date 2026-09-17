@@ -1,22 +1,68 @@
-import os
-from flask import Flask, render_template, request, jsonify
+// Abrir y cerrar el modal del chat
+function openChatModal() {
+    const modal = document.getElementById('chat-modal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+}
 
-# Le indicamos a Flask que busque css, img y js en la raíz '.'
-app = Flask(__name__, static_folder='.', static_url_path='')
+function closeChatModal() {
+    const modal = document.getElementById('chat-modal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+// Envío de mensajes al servidor Flask
+document.addEventListener('DOMContentLoaded', () => {
+    const chatForm = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    data = request.get_json() or {}
-    user_message = data.get('message', '')
+    if (chatForm) {
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
 
-    bot_reply = f"¡Quiubo, parcero! Recibí tu mensaje: '{user_message}'. ¿En qué te colaboro hoy sobre Colombia o el proyecto?"
+            // Agregar mensaje del usuario a la pantalla
+            appendMessage('user-message', message, 'Tú');
+            userInput.value = '';
 
-    return jsonify({'response': bot_reply})
+            try {
+                // Petición al backend Flask
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+                const data = await response.json();
+                appendMessage('bot-message', data.response, 'Mini Tinto');
+            } catch (error) {
+                appendMessage('bot-message', '¡Uy parce! Ocurrió un error al conectar con el servidor. Intenta de nuevo.', 'Mini Tinto');
+            }
+        });
+    }
+});
+
+function appendMessage(className, text, sender) {
+    const chatBox = document.getElementById('chat-box');
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', className);
+    
+    if (className === 'bot-message') {
+        msgDiv.innerHTML = `
+            <div class="bot-info-user">
+                <img src="/img/mini-tinto.jpg" class="mini-icon" alt="Mini Tinto">
+                <strong>${sender}:</strong>
+            </div>
+            ${text}
+        `;
+    } else {
+        msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+    }
+
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
