@@ -1,4 +1,5 @@
 flask
 groq
+openai
 gunicorn
 python-dotenv
