@@ -266,3 +266,73 @@ footer {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-3px); }
 }
+/* Ajuste de tamaño de tarjetas e imágenes */
+.image-card {
+    padding: 0 !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+}
+
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 190px; /* Tamaño controlado para que no se vean gigantes */
+    overflow: hidden;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.image-card:hover .card-img {
+    transform: scale(1.05);
+}
+
+/* Insignia de Mini Tinto disfrutando en la foto */
+.mini-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(20, 20, 22, 0.85);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.badge-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #d4af37;
+}
+
+.card-content {
+    padding: 18px;
+}
+
+.card-content h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    color: #f1f5f9;
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin: 0;
+}
