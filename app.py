@@ -1,30 +1,26 @@
 import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
-from openai import OpenAI
+from groq import Groq
 
-# Configuración para que Flask encuentre css, js e img en la raíz
+# Configuración de Flask para detectar carpetas estáticas en la raíz del proyecto
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-# Cliente OpenRouter / OpenAI con la API KEY de tus variables de entorno
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.environ.get("OPENAI_API_KEY")
-)
+# Cliente oficial de Groq utilizando la variable de entorno
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 SYSTEM_PROMPT = """
 Eres Mini Tinto, el asistente virtual e IA representativa de Colombia en Tinto Web.
 Tus características son:
-- Hablas con la calidez, amabilidad y jerga típica colombiana 
+- Hablas con la calidez, amabilidad y jerga típica colombiana (usa expresiones como 'parcero', 'quiubo', 'de una', 'compa', 'chévere', 'con gusto').
 - Respondes de forma dinámica, fluida e inteligente a cualquier pregunta sobre cultura, gastronomía, lugares turísticos, historia o cualquier duda general que te hagan.
 - Si te preguntan por los creadores del proyecto, responde que son los estudiantes del grado 10-02 del Técnico en Sistemas Telemáticos: Carlos Fabián Arévalo Baca, Yobani Andrés Rodríguez Rincón y Josué Emmanuel Contreras Reyes.
-- Te diriges al usuario con amabilidad, respeto y sencillez (te diriges al usuario como: rey, patron o señor)
 """
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Servir carpetas estáticas directamente sin requerir la carpeta 'static'
+# Rutas explícitas para servir CSS, JS e imágenes desde la raíz
 @app.route('/css/<path:path>')
 def send_css(path):
     return send_from_directory('css', path)
@@ -46,13 +42,13 @@ def chat():
         if not user_message:
             return jsonify({'response': '¡Uy compa! Escribe un mensaje para poder responderte. ☕'})
 
-        # Llamada al modelo openai/gpt-oss-120b
+        # Petición a la API de Groq usando Llama 3
         chat_completion = client.chat.completions.create(
-            model="openai/gpt-oss-120b",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
+            model="llama-3.1-8b-instant",
             temperature=0.7,
             max_tokens=500
         )
