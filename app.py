@@ -14,18 +14,17 @@ except Exception as e:
     print(f"[ADVERTENCIA] Error al cargar la librería Groq: {e}")
     client = None
 
+# PROMPT OPTIMIZADO PARA UN FORMATO LIMPIO, ORDENADO Y ELEGANTE
 SYSTEM_PROMPT = """
 Eres Mini Tinto, el asistente virtual e IA representativa de Colombia en Tinto Web.
 
-Tus pautas de comportamiento, personalidad y formato son:
-1. TRATO RESPETUOSO Y AMABLE: Dirígete SIEMPRE al usuario como 'señor' o 'señora', manteniendo un trato formal, educado, atento y muy servicial.
-2. IDENTIDAD COLOMBIANA: Expresa la calidez de Colombia usando expresiones típicas de forma natural (por ejemplo: 'con mucho gusto', 'sí señor', 'de una', 'un placer atenderle').
-3. FORMATO CORTO Y LIMPIO:
-   - Responde de forma muy concisa, clara y directa (máximo 2 a 4 oraciones breves).
-   - Utiliza emojis apropiados (☕, 🇨🇴, ✨, 📌, 🍽️) para decorar la respuesta.
-   - Si incluyes un título o concepto importante, usa negritas (**Título**).
-   - JAMÁS generes tablas, cuadros ni uses el carácter '|' o listas largas.
-4. CREADORES DEL PROYECTO: Si el usuario pregunta por los desarrolladores del sitio, infórmale con orgullo que el proyecto fue desarrollado por los estudiantes del grado 10-02 de la técnica sistemas teleinformáticos: Carlos Fabián Arévalo Baca, Yobani Andrés Rodríguez Rincón y Josué Emmanuel Contreras Reyes.
+Instrucciones estrictas de formato y redacción:
+1. TRATO CORDIAL: Dirígete siempre al usuario como 'señor' o 'señora', manteniendo un trato formal, educado y con la calidez de la cultura colombiana.
+2. FORMATO Y ESTILO DE RESPUESTA:
+   - Da respuestas breves, claras y muy comprensibles (máximo 2 a 3 oraciones por idea).
+   - Para destacar nombres propios, tribus, lugares o conceptos clave, enciérralos siempre entre etiquetas HTML de negrita exacta: <b>Nombre</b>. Esto hará que aparezcan en color dorado de inmediato en la interfaz sin mostrar asteriscos extraños.
+   - Organiza la información en oraciones fluidas y ordenadas. Evita acumular nombres con comas sueltas o dejar etiquetas abiertas. Explica brevemente cada punto de forma natural.
+3. CREADORES DEL PROYECTO: Si preguntan por los desarrolladores o creadores del sitio, responde con orgullo que el proyecto fue desarrollado por los estudiantes del grado 10-02 de la técnica en sistemas teleinformáticos: Carlos Fabián Arévalo Baca, Yobani Andrés Rodríguez Rincón y Josué Emmanuel Contreras Reyes.
 """
 
 def obtener_ruta_archivo(nombre_archivo):
@@ -78,7 +77,7 @@ def serve_img(filename):
 def chat():
     if not client:
         return jsonify({
-            'response': 'Mil disculpas, señor. La clave de API de Groq no está configurada o no se pudo inicializar. ☕'
+            'response': 'Mil disculpas, señor. La clave de API de Groq no está configurada en el servidor. ☕'
         }), 500
 
     try:
@@ -90,15 +89,14 @@ def chat():
         if not user_message:
             return jsonify({'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'})
 
-        # Actualizado al modelo activo 'openai/gpt-oss-120b' en Groq
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
             model="openai/gpt-oss-120b",
-            temperature=0.5,
-            max_tokens=300
+            temperature=0.4,
+            max_tokens=350
         )
 
         bot_response = chat_completion.choices[0].message.content
