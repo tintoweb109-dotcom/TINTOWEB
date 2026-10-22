@@ -2,8 +2,8 @@ import os
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from groq import Groq
 
-# Flask buscará por defecto en la carpeta 'templates'
-app = Flask(__name__, static_folder='.', static_url_path='')
+# Configuración estándar y limpia de Flask
+app = Flask(__name__)
 
 # Cliente oficial de Groq
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
@@ -25,15 +25,15 @@ Tus pautas de comportamiento, personalidad y formato son:
 
 @app.route('/')
 def home():
-    """Ruta de la landing page principal"""
+    """Carga la página principal desde templates/index.html"""
     return render_template('index.html')
 
 @app.route('/chat-view')
 def chat_view():
-    """Ruta para la vista completa del chat"""
+    """Carga la página del chat completo desde templates/chat.html"""
     return render_template('chat.html')
 
-# --- RUTAS PARA ARCHIVOS ESTÁTICOS ---
+# --- SERVIR ARCHIVOS ESTÁTICOS DESDE LA RAÍZ ---
 @app.route('/css/<path:path>')
 def send_css(path):
     return send_from_directory('css', path)
@@ -59,13 +59,13 @@ def chat():
         if not user_message:
             return jsonify({'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'})
 
-        # Consulta a Groq con límite de tokens para garantizar brevedad
+        # Consulta a Groq
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="gemma2-9b-it", # O el modelo activo configurado en tu cuenta
+            model="gemma2-9b-it", # El modelo activo en tu cuenta
             temperature=0.5,
             max_tokens=300
         )
