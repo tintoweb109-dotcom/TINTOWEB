@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat con Mini Tinto — Tinto Web</title>
+
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .full-chat-container {
+            max-width: 900px;
+            width: 90%;
+            margin: 30px auto;
+            flex: 1;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .full-chat-header {
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .full-chat-box {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 60vh;
+        }
+        .btn-back {
+            background: #e2e8f0;
+            color: #0f172a;
+            padding: 8px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .message strong {
+            color: #f59e0b; /* Color resaltado dorado/amarillo para títulos */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/img/mini-tinto.jpg" alt="Mini Tinto" class="logo-robot">
+            <span class="brand-name">Tinto<span class="highlight">Web</span></span>
+        </div>
+        <a href="/" class="btn-back">⬅ Volver al Inicio</a>
+    </nav>
+
+    <div class="full-chat-container">
+        <header class="full-chat-header">
+            <div class="header-left" style="display: flex; align-items: center; gap: 12px;">
+                <img src="/img/mini-tinto.jpg" alt="Mini Tinto" class="chat-avatar-img" style="width: 45px; height: 45px; border-radius: 50%;">
+                <div>
+                    <h3 style="margin: 0; font-size: 1.2rem;">Centro de Charla con Mini Tinto ☕</h3>
+                    <span class="status-online" style="color: #10b981; font-size: 0.85rem;">● En línea y listo para responder</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="full-chat-box" id="chat-box">
+            <div class="message bot-message">
+                <div class="bot-info-user">
+                    <img src="/img/mini-tinto.jpg" class="mini-icon" alt="Mini Tinto" style="width: 25px; border-radius: 50%;">
+                    <strong>Mini Tinto:</strong>
+                </div>
+                ¡Con el mayor de los gustos le doy la bienvenida, señor! 🇨🇴☕ ¿En qué le puedo colaborar el día de hoy?
+            </div>
+        </section>
+
+        <form class="chat-input-area" id="chat-form" style="padding: 20px;">
+            <input 
+                type="text" 
+                id="user-input" 
+                placeholder="Escribe tu mensaje a Mini Tinto..." 
+                autocomplete="off" 
+                required
+            >
+            <button type="submit" class="btn-primary">Enviar 🚀</button>
+        </form>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
