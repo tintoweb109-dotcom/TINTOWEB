@@ -90,13 +90,13 @@ def chat():
         if not user_message:
             return jsonify({'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'})
 
-        # Cambio de modelo de gemma2-9b-it a llama-3.1-8b-instant (oficial y ultra rápido en Groq)
+        # Actualizado al modelo activo 'openai/gpt-oss-120b' en Groq
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="llama-3.1-8b-instant",
+            model="openai/gpt-oss-120b",
             temperature=0.5,
             max_tokens=300
         )
