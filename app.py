@@ -1,13 +1,11 @@
 import os
 from flask import Flask, request, jsonify, send_file, send_from_directory
 
-# Inicializar Flask sin carpeta estática por defecto para manejar rutas absolutas
 app = Flask(__name__, static_folder=None)
 
-# Definir la ruta base del proyecto
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Carga segura del cliente de Groq
+# Carga segura de Groq API
 try:
     from groq import Groq
     groq_api_key = os.environ.get("GROQ_API_KEY")
@@ -30,25 +28,36 @@ Tus pautas de comportamiento, personalidad y formato son:
 4. CREADORES DEL PROYECTO: Si el usuario pregunta por los desarrolladores del sitio, infórmale con orgullo que el proyecto fue desarrollado por los estudiantes del grado 10-02 de la técnica sistemas teleinformáticos: Carlos Fabián Arévalo Baca, Yobani Andrés Rodríguez Rincón y Josué Emmanuel Contreras Reyes.
 """
 
+def obtener_ruta_archivo(nombre_archivo):
+    rutas_a_probar = [
+        os.path.join(BASE_DIR, 'templates', nombre_archivo),
+        os.path.join(BASE_DIR, 'templates ', nombre_archivo),
+        os.path.join(BASE_DIR, nombre_archivo)
+    ]
+    for ruta in rutas_a_probar:
+        if os.path.exists(ruta):
+            return ruta
+    return None
+
 # ---------------------------------------------------------
-# RUTAS DE PÁGINAS WEB
+# RUTAS DE PÁGINAS HTML
 # ---------------------------------------------------------
 @app.route('/')
 def home():
-    index_path = os.path.join(BASE_DIR, 'templates', 'index.html')
-    if os.path.exists(index_path):
-        return send_file(index_path)
-    return "<h1>Servidor en línea - Tinto Web ☕</h1><p>Agregue index.html en la carpeta templates.</p>"
+    file_path = obtener_ruta_archivo('index.html')
+    if file_path:
+        return send_file(file_path)
+    return "<h1>Error: No se encontró index.html</h1>", 404
 
 @app.route('/chat-view')
 def chat_view():
-    chat_path = os.path.join(BASE_DIR, 'templates', 'chat.html')
-    if os.path.exists(chat_path):
-        return send_file(chat_path)
-    return "<h1>Vista de Chat ☕</h1><p>Agregue chat.html en la carpeta templates.</p>"
+    file_path = obtener_ruta_archivo('chat.html')
+    if file_path:
+        return send_file(file_path)
+    return "<h1>Error: No se encontró chat.html</h1>", 404
 
 # ---------------------------------------------------------
-# RUTAS DE ARCHIVOS ESTÁTICOS (CSS, JS, IMÁGENES)
+# RUTAS DE ARCHIVOS ESTÁTICOS
 # ---------------------------------------------------------
 @app.route('/css/<path:filename>')
 def serve_css(filename):
@@ -63,7 +72,7 @@ def serve_img(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'img'), filename)
 
 # ---------------------------------------------------------
-# ENDPOINT PARA EL CHATBOT
+# ENDPOINT DEL CHATBOT
 # ---------------------------------------------------------
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -81,12 +90,13 @@ def chat():
         if not user_message:
             return jsonify({'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'})
 
+        # Cambio de modelo de gemma2-9b-it a llama-3.1-8b-instant (oficial y ultra rápido en Groq)
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_message}
             ],
-            model="gemma2-9b-it",
+            model="llama-3.1-8b-instant",
             temperature=0.5,
             max_tokens=300
         )
