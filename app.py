@@ -4,7 +4,10 @@ from groq import Groq
 
 app = Flask(__name__)
 
-# Cliente oficial de Groq seguro
+# Definir la ruta absoluta exacta del proyecto
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
 groq_api_key = os.environ.get("GROQ_API_KEY")
 client = Groq(api_key=groq_api_key) if groq_api_key else None
 
@@ -24,26 +27,26 @@ Tus pautas de comportamiento, personalidad y formato son:
 
 @app.route('/')
 def home():
-    """Sirve la página principal directamente desde la carpeta templates"""
-    return send_from_directory('templates', 'index.html')
+    """Sirve la página principal con la ruta absoluta"""
+    return send_from_directory(TEMPLATES_DIR, 'index.html')
 
 @app.route('/chat-view')
 def chat_view():
-    """Sirve la página del chat directamente desde la carpeta templates"""
-    return send_from_directory('templates', 'chat.html')
+    """Sirve la página del chat con la ruta absoluta"""
+    return send_from_directory(TEMPLATES_DIR, 'chat.html')
 
 # --- ARCHIVOS ESTÁTICOS ---
 @app.route('/css/<path:path>')
 def send_css(path):
-    return send_from_directory('css', path)
+    return send_from_directory(os.path.join(BASE_DIR, 'css'), path)
 
 @app.route('/js/<path:path>')
 def send_js(path):
-    return send_from_directory('js', path)
+    return send_from_directory(os.path.join(BASE_DIR, 'js'), path)
 
 @app.route('/img/<path:path>')
 def send_img(path):
-    return send_from_directory('img', path)
+    return send_from_directory(os.path.join(BASE_DIR, 'img'), path)
 
 # --- ENDPOINT DEL CHATBOT ---
 @app.route('/chat', methods=['POST'])
