@@ -1,28 +1,21 @@
 import os
-from flask import Flask, render_template, request, jsonify, send_from_directory
-from groq import Groq
+from flask import Flask, request, jsonify, send_file, send_from_directory
 
-# ---------------------------------------------------------
-# CONFIGURACIÓN DE RUTAS ABSOLUTAS Y FLASK
-# ---------------------------------------------------------
+# Inicializar Flask sin carpeta estática por defecto para manejar rutas absolutas
+app = Flask(__name__, static_folder=None)
+
+# Definir la ruta base del proyecto
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
-app = Flask(
-    __name__,
-    template_folder=TEMPLATES_DIR,
-    static_folder=None  # Se gestionan las rutas estáticas de forma manual explícita
-)
+# Carga segura del cliente de Groq
+try:
+    from groq import Groq
+    groq_api_key = os.environ.get("GROQ_API_KEY")
+    client = Groq(api_key=groq_api_key) if groq_api_key else None
+except Exception as e:
+    print(f"[ADVERTENCIA] Error al cargar la librería Groq: {e}")
+    client = None
 
-# ---------------------------------------------------------
-# CONFIGURACIÓN DEL CLIENTE GROQ API
-# ---------------------------------------------------------
-groq_api_key = os.environ.get("GROQ_API_KEY")
-client = Groq(api_key=groq_api_key) if groq_api_key else None
-
-# ---------------------------------------------------------
-# INSTRUCCIONES DEL SISTEMA (PROMPT PARA MINI TINTO)
-# ---------------------------------------------------------
 SYSTEM_PROMPT = """
 Eres Mini Tinto, el asistente virtual e IA representativa de Colombia en Tinto Web.
 
@@ -38,17 +31,21 @@ Tus pautas de comportamiento, personalidad y formato son:
 """
 
 # ---------------------------------------------------------
-# RUTAS PRINCIPALES (VISTAS HTML)
+# RUTAS DE PÁGINAS WEB
 # ---------------------------------------------------------
 @app.route('/')
 def home():
-    """Ruta para cargar el index.html desde la carpeta templates"""
-    return render_template('index.html')
+    index_path = os.path.join(BASE_DIR, 'templates', 'index.html')
+    if os.path.exists(index_path):
+        return send_file(index_path)
+    return "<h1>Servidor en línea - Tinto Web ☕</h1><p>Agregue index.html en la carpeta templates.</p>"
 
 @app.route('/chat-view')
 def chat_view():
-    """Ruta dedicada para la interfaz de chat en chat.html"""
-    return render_template('chat.html')
+    chat_path = os.path.join(BASE_DIR, 'templates', 'chat.html')
+    if os.path.exists(chat_path):
+        return send_file(chat_path)
+    return "<h1>Vista de Chat ☕</h1><p>Agregue chat.html en la carpeta templates.</p>"
 
 # ---------------------------------------------------------
 # RUTAS DE ARCHIVOS ESTÁTICOS (CSS, JS, IMÁGENES)
@@ -66,29 +63,24 @@ def serve_img(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'img'), filename)
 
 # ---------------------------------------------------------
-# ENDPOINT PARA EL CHATBOT (POST /chat)
+# ENDPOINT PARA EL CHATBOT
 # ---------------------------------------------------------
 @app.route('/chat', methods=['POST'])
 def chat():
     if not client:
         return jsonify({
-            'response': 'Mil disculpas, señor. La clave de API de Groq no se encuentra configurada en el servidor. ☕'
+            'response': 'Mil disculpas, señor. La clave de API de Groq no está configurada o no se pudo inicializar. ☕'
         }), 500
 
     try:
         data = request.get_json()
         if not data:
-            return jsonify({
-                'response': 'Sí señor, por favor envíe un mensaje válido. ☕'
-            }), 400
+            return jsonify({'response': 'Sí señor, por favor envíe un mensaje válido. ☕'}), 400
 
         user_message = data.get('message', '').strip()
         if not user_message:
-            return jsonify({
-                'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'
-            })
+            return jsonify({'response': 'Con mucho gusto le atiendo, señor, pero debe escribir un mensaje primero. ☕'})
 
-        # Consulta a la API de Groq utilizando gemma2-9b-it
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
@@ -105,11 +97,8 @@ def chat():
     except Exception as e:
         print(f"[Error en Chatbot]: {e}")
         return jsonify({
-            'response': 'Mil disculpas, señor. Ocurrió un error de conexión al procesar su solicitud. ☕'
+            'response': 'Mil disculpas, señor. Ocurrió un error al conectar con mis servidores. ☕'
         }), 500
 
-# ---------------------------------------------------------
-# EJECUCIÓN LOCAL
-# ---------------------------------------------------------
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
